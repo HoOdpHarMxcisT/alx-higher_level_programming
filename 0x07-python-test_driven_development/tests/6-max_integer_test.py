@@ -1,57 +1,71 @@
 #!/usr/bin/python3
+"""Unittest for max_integer([..])
 """
-Unittest for max_integer([..])
-"""
-
-
 import unittest
 max_integer = __import__('6-max_integer').max_integer
 
 
 class TestMaxInteger(unittest.TestCase):
-    """
-    unittests for the function def max_integer(list=[])
-    """
+    """unittest class for max_integer"""
+    def test_module_docstring(self):
+        """Tests for module docsting"""
+        m = __import__('6-max_integer').__doc__
+        self.assertTrue(len(m) > 1)
 
-    def test_intergers(self):
-        """
-        Testing signed and unsigned intergers
-        """
+    def test_function_docstring(self):
+        """Tests for funstion docstring"""
+        f = max_integer.__doc__
+        self.assertTrue(len(f) > 1)
 
-        self.assertEqual(max_integer([1, 2, 3, 4]), 4)
-        self.assertEqual(max_integer([-1, -2, -3, -4]), -1)
-        self.assertEqual(max_integer([1, 2, 3, 4e100]), 4e100)
-        self.assertEqual(max_integer([0, 0]), 0)
-        self.assertEqual(max_integer([-31, 0, -3, -24]), 0)
+    def test_empty_list(self):
+        """Tests for empty list []"""
+        e = []
+        self.assertIsNone(max_integer(e))
 
-    def test_floats(self):
-        """
-        Testing signed and unsigned floats
-        """
+    def test_no_args(self):
+        """Tests for no arguments passed to func"""
+        self.assertIsNone(max_integer())
 
-        self.assertEqual(max_integer([1.0, 2.0, 3.0, 4.0]), 4.0)
-        self.assertEqual(max_integer([0., 0.0]), 0.0)
-        self.assertEqual(max_integer([-1.5, -2.5, -3.8, -4.0]), -1.5)
+    def test_one_element(self):
+        """Tests for only one number in the list"""
+        o = [1]
+        self.assertEqual(max_integer(o), 1)
 
-    def test_strings(self):
-        """
-        Testing strings
-        """
+    def test_positive_end(self):
+        """Tests for all positive with max at end"""
+        e = [2, 10, 8, 36, 14, 50]
+        self.assertEqual(max_integer(e), 50)
 
-        self.assertEqual(max_integer(["abc", "xyz"]), "xyz")
-        self.assertEqual(max_integer(["a", "j", "h", "w"]), "w")
-        self.assertEqual(max_integer(["a", "Z"]), "a")
-        self.assertEqual(max_integer("12345678"), "8")
-        self.assertEqual(max_integer("Cohort 17 from Holberton School"), "t")
+    def test_positive_middle(self):
+        """Tests for all positive with max in middle"""
+        m = [2, 10, 8, 360, 14, 50]
+        self.assertEqual(max_integer(m), 360)
+
+    def test_positive_beginning(self):
+        """Tests for all positive with max at beginning"""
+        b = [200, 10, 8, 36, 14, 50]
+        self.assertEqual(max_integer(b), 200)
+
+    def test_one_negative(self):
+        """Tests for list with one negative number"""
+        on = [200, 10, 8, -36, 14, 50]
+        self.assertEqual(max_integer(on), 200)
+
+    def test_all_negative(self):
+        """Tests for list with all negative numbers"""
+        n = [-6, -50, -75, -1, -100]
+        self.assertEqual(max_integer(n), -1)
 
     def test_none(self):
-        self.assertEqual(max_integer([]), None)
-        self.assertEqual(max_integer(), None)
+        """Tests for passing none as argument"""
+        with self.assertRaises(TypeError):
+            max_integer(None)
 
-    def mixed_types(self):
+    def test_non_int_arg(self):
+        """Tests for a non-int type in list"""
+        string = [1, 2, "Hello", 4, 5]
         with self.assertRaises(TypeError):
-            max_integer([1, "Hello World", True])
-        with self.assertRaises(TypeError):
-            max_integer([False, None, -3.14])
-        with self.assertRaises(TypeError):
-            max_integer([[1, 2, 3], (5, 2)])
+            max_integer(string)
+
+if __name__ == "__main__":
+    unittest.main()
