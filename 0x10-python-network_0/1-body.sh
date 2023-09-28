@@ -1,6 +1,3 @@
 #!/bin/bash
-# Get the response body for a given URL for 200 status code responses.
-
-# -s = Silent mode. Don't show progress meter or error messages.
-# -L = Follow redirects in URL
-curl -sL "$1"
+# Script that takes in a URL, sends a GET request to the URL, and displays the body of the response
+curl -sL "$1" 

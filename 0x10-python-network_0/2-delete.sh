@@ -1,6 +1,3 @@
 #!/bin/bash
-# Send a DELETE request to a given URL and display the response body.
-
-# -s = Silent mode. Don't show progress meter or error messages.
-# X = specifies the request method - DELETE
-curl -sX DELETE "$1"
+# Script that sends a DELETE request to the URL passed as the first argument and displays the body of the response
+curl -sX "DELETE" "$1"
